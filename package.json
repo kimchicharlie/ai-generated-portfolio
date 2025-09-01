@@ -11,9 +11,6 @@
     "export": "next build"
   },
   "dependencies": {
-    "@types/node": "^22.10.1",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
     "autoprefixer": "^10.4.20",
     "framer-motion": "^11.11.17",
     "html-to-image": "^1.11.13",
@@ -28,6 +25,11 @@
     "tailwindcss": "^3.4.15",
     "typescript": "^5.6.3"
   },
+  "devDependencies": {
+    "@types/html2pdf.js": "^0.10.0",
+    "@types/node": "24.3.0",
+    "@types/react": "19.1.12"
+  },
   "keywords": [
     "portfolio",
     "nextjs",
@@ -36,8 +38,5 @@
     "tailwindcss"
   ],
   "author": "Charlie Henin",
-  "license": "MIT",
-  "devDependencies": {
-    "@types/html2pdf.js": "^0.10.0"
-  }
+  "license": "MIT"
 }
