@@ -169,4 +169,63 @@ body {
   .min-h-screen {
     padding: 0 !important;
   }
+}
+
+/* PDF-specific page break controls */
+.page-break-before {
+  page-break-before: always;
+  break-before: page;
+}
+
+.page-break-after {
+  page-break-after: always;
+  break-after: page;
+}
+
+.avoid-page-break {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* PDF-specific fixes for better rendering */
+@media print {
+  .resume-icon {
+    display: inline-block !important;
+    vertical-align: baseline !important;
+    margin-right: 4px !important;
+  }
+  
+  /* Fix hobby items layout in PDF */
+  .hobby-item {
+    display: flex !important;
+    align-items: center !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    margin-bottom: 2px !important;
+  }
+  
+  .hobby-icon {
+    flex-shrink: 0 !important;
+    margin-right: 4px !important;
+    display: inline-block !important;
+  }
+  
+  .hobby-text {
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+  }
+  
+  /* Ensure proper spacing for location/date icons */
+  .location-date-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+  }
+  
+  .location-date-item {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
 } 
