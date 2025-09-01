@@ -385,7 +385,6 @@ export const portfolioData: PortfolioData = {
     { name: { en: "Travels", fr: "Voyages" }, icon: "✈️" },
     { name: { en: "Guitar", fr: "Guitare" }, icon: "🎸" },
     { name: { en: "Singing", fr: "Chanter" }, icon: "🎤" },
-    { name: { en: "Coding", fr: "Programmation" }, icon: "💻" },
     { name: { en: "Video games", fr: "Jeux vidéos" }, icon: "🎮" },
   ],
 };
