@@ -1,6 +1,6 @@
 [build]
   publish = "out"
-  command = "npm ci --prefer-offline --no-audit --legacy-peer-deps --timeout=300000 && npm run build"
+  command = "npm ci --prefer-offline --no-audit --legacy-peer-deps --timeout=300000 && npx next build"
 
 [build.environment]
   NODE_VERSION = "18"
