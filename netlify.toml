@@ -1,6 +1,6 @@
 [build]
   publish = "out"
-  command = "rm -rf node_modules package-lock.json && npm cache clean --force && npm install --legacy-peer-deps --verbose && npm ls && npx next build"
+  command = "npm config set registry https://registry.npmjs.org/ && rm -rf node_modules package-lock.json && npm cache clean --force && npm install --registry=https://registry.npmjs.org/ --legacy-peer-deps --verbose && npm ls && npx next build"
 
 [build.environment]
   NODE_VERSION = "20"
