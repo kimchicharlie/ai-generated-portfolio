@@ -1,12 +1,13 @@
 [build]
   publish = "out"
-  command = "npm ci --prefer-offline --no-audit --legacy-peer-deps --timeout=300000 && npx next build"
+  command = "rm -rf node_modules && npm install --legacy-peer-deps && npx next build"
 
 [build.environment]
   NODE_VERSION = "18"
   NPM_CONFIG_REGISTRY = "https://registry.npmjs.org/"
-  NPM_CONFIG_TIMEOUT = "300000"
-  NPM_CONFIG_FETCH_TIMEOUT = "300000"
+  NPM_CONFIG_TIMEOUT = "600000"
+  NPM_CONFIG_FETCH_TIMEOUT = "600000"
+  NPM_CONFIG_PROGRESS = "false"
 
 [[redirects]]
   from = "/*"
