@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import React from "react";
 import "./globals.css";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import Navigation from "@/components/Navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -51,6 +52,7 @@ const RootLayout = ({ children }: RootLayoutProps): React.JSX.Element => {
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.className} bg-white text-gray-900 antialiased`}>
         <LanguageProvider>
+          <Navigation />
           <main className="min-h-screen">{children}</main>
         </LanguageProvider>
       </body>

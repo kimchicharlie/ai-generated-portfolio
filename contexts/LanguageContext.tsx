@@ -5,6 +5,10 @@ import { Language, LanguageContextType, Translations } from "@/types/language";
 
 const translations: Translations = {
   en: {
+    // Navigation
+    "nav.resume": "Resume",
+    "nav.memoryGame": "Memory Game",
+
     // Header
     "header.resume": "Resume",
     "header.downloadUS": "US Letter",
@@ -31,6 +35,10 @@ const translations: Translations = {
     "common.present": "Present",
   },
   fr: {
+    // Navigation
+    "nav.resume": "CV",
+    "nav.memoryGame": "Jeu de Mémoire",
+
     // Header
     "header.resume": "CV",
     "header.downloadUS": "Format US",

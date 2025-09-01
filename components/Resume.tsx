@@ -18,7 +18,6 @@ import { getLocalizedContent, getLocalizedArray } from "@/types/portfolio";
 export type PageFormat = "letter" | "a4";
 export type DownloadType = "jpeg" | "pdf";
 import { useLanguage } from "@/contexts/LanguageContext";
-import LanguageToggle from "./LanguageToggle";
 
 const Resume = (): React.JSX.Element => {
   const { language, t } = useLanguage();
@@ -409,27 +408,9 @@ const Resume = (): React.JSX.Element => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      {/* Header with language toggle only */}
-      <motion.header
-        className="bg-white shadow-sm border-b no-print"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-3">
-            <FileText className="h-6 w-6 text-primary-600" />
-            <h1 className="text-xl font-semibold text-gray-900">
-              {t("header.resume")}
-            </h1>
-          </div>
-          <LanguageToggle />
-        </div>
-      </motion.header>
-
       {/* Floating Download Buttons */}
       <motion.div
-        className="fixed top-16 sm:top-20 right-2 sm:right-4 z-50 flex flex-col space-y-2 no-print"
+        className="fixed top-20 sm:top-24 right-2 sm:right-4 z-50 flex flex-col space-y-2 no-print"
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
