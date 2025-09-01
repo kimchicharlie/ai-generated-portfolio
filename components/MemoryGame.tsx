@@ -27,22 +27,17 @@ const MemoryGame = (): React.JSX.Element => {
   const [startTime, setStartTime] = useState<number>(Date.now());
   const [elapsedTime, setElapsedTime] = useState(0);
 
+  // Utility function to randomly select items from an array
+  const getRandomItems = <T,>(array: T[], count: number): T[] => {
+    const shuffled = [...array].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, count);
+  };
+
   // Initialize game cards
   const initializeGame = useCallback(() => {
-    // Get a selection of hobbies and technologies
-    const selectedHobbies = portfolioData.hobbies.slice(0, 4);
-    const selectedTechnologies = portfolioData.technologies
-      .filter((tech) =>
-        [
-          "React.js",
-          "Node.js",
-          "TypeScript",
-          "JavaScript",
-          "Next.js",
-          "MongoDB",
-        ].includes(tech.name)
-      )
-      .slice(0, 4);
+    // Randomly select hobbies and technologies
+    const selectedHobbies = getRandomItems(portfolioData.hobbies, 4);
+    const selectedTechnologies = getRandomItems(portfolioData.technologies, 4);
 
     const gameItems: CardType[] = [
       ...selectedHobbies.map((hobby) => ({
@@ -83,7 +78,8 @@ const MemoryGame = (): React.JSX.Element => {
     if (
       gameState !== "playing" ||
       flippedCards.includes(cardId) ||
-      matchedPairs.includes(cardId)
+      matchedPairs.includes(cardId) ||
+      flippedCards.length >= 2
     ) {
       return;
     }
