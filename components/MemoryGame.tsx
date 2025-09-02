@@ -16,6 +16,18 @@ type CardType = {
 };
 
 type GameState = "playing" | "won" | "paused";
+type DifficultyLevel = "easy" | "medium" | "hard";
+
+type DifficultyConfig = {
+  name: string;
+  description: string;
+  gridCols: number;
+  gridRows: number;
+  pairCount: number;
+  flipBackDelay: number;
+  theme: string;
+  icon: string;
+};
 
 const MemoryGame = (): React.JSX.Element => {
   const { language } = useLanguage();
@@ -24,8 +36,45 @@ const MemoryGame = (): React.JSX.Element => {
   const [matchedPairs, setMatchedPairs] = useState<string[]>([]);
   const [moves, setMoves] = useState(0);
   const [gameState, setGameState] = useState<GameState>("playing");
-  const [startTime, setStartTime] = useState<number>(Date.now());
+  const [startTime, setStartTime] = useState<number | null>(null);
   const [elapsedTime, setElapsedTime] = useState(0);
+  const [difficulty, setDifficulty] = useState<DifficultyLevel>("medium");
+
+  // Difficulty configurations
+  const difficultyConfigs: Record<DifficultyLevel, DifficultyConfig> = {
+    easy: {
+      name: "Beginner",
+      description: "Perfect for getting started",
+      gridCols: 3,
+      gridRows: 4,
+      pairCount: 6,
+      flipBackDelay: 1200,
+      theme: "green",
+      icon: "🌱",
+    },
+    medium: {
+      name: "Explorer",
+      description: "Balanced challenge",
+      gridCols: 4,
+      gridRows: 4,
+      pairCount: 8,
+      flipBackDelay: 1000,
+      theme: "blue",
+      icon: "🧭",
+    },
+    hard: {
+      name: "Master",
+      description: "Ultimate challenge",
+      gridCols: 4,
+      gridRows: 5,
+      pairCount: 10,
+      flipBackDelay: 800,
+      theme: "red",
+      icon: "🔥",
+    },
+  };
+
+  const currentConfig = difficultyConfigs[difficulty];
 
   // Utility function to randomly select items from an array
   const getRandomItems = <T,>(array: T[], count: number): T[] => {
@@ -35,9 +84,16 @@ const MemoryGame = (): React.JSX.Element => {
 
   // Initialize game cards
   const initializeGame = useCallback(() => {
-    // Randomly select hobbies and technologies
-    const selectedHobbies = getRandomItems(portfolioData.hobbies, 4);
-    const selectedTechnologies = getRandomItems(portfolioData.technologies, 4);
+    const config = difficultyConfigs[difficulty];
+    const hobbyCount = Math.ceil(config.pairCount / 2);
+    const techCount = config.pairCount - hobbyCount;
+
+    // Randomly select hobbies and technologies based on difficulty
+    const selectedHobbies = getRandomItems(portfolioData.hobbies, hobbyCount);
+    const selectedTechnologies = getRandomItems(
+      portfolioData.technologies,
+      techCount
+    );
 
     const gameItems: CardType[] = [
       ...selectedHobbies.map((hobby) => ({
@@ -69,9 +125,9 @@ const MemoryGame = (): React.JSX.Element => {
     setMatchedPairs([]);
     setMoves(0);
     setGameState("playing");
-    setStartTime(Date.now());
+    setStartTime(null);
     setElapsedTime(0);
-  }, [language]);
+  }, [difficulty, language]);
 
   // Handle card click
   const handleCardClick = (cardId: string) => {
@@ -82,6 +138,11 @@ const MemoryGame = (): React.JSX.Element => {
       flippedCards.length >= 2
     ) {
       return;
+    }
+
+    // Start timer on first card click
+    if (startTime === null) {
+      setStartTime(Date.now());
     }
 
     const newFlippedCards = [...flippedCards, cardId];
@@ -104,10 +165,10 @@ const MemoryGame = (): React.JSX.Element => {
         setMatchedPairs((prev) => [...prev, ...newFlippedCards]);
         setFlippedCards([]);
       } else {
-        // No match, flip back after delay
+        // No match, flip back after delay based on difficulty
         setTimeout(() => {
           setFlippedCards([]);
-        }, 1000);
+        }, currentConfig.flipBackDelay);
       }
     }
   };
@@ -122,7 +183,7 @@ const MemoryGame = (): React.JSX.Element => {
   // Update elapsed time
   useEffect(() => {
     let interval: NodeJS.Timeout;
-    if (gameState === "playing") {
+    if (gameState === "playing" && startTime !== null) {
       interval = setInterval(() => {
         setElapsedTime(Date.now() - startTime);
       }, 1000);
@@ -134,6 +195,11 @@ const MemoryGame = (): React.JSX.Element => {
   useEffect(() => {
     initializeGame();
   }, [initializeGame]);
+
+  // Reinitialize game when difficulty changes
+  useEffect(() => {
+    initializeGame();
+  }, [difficulty, initializeGame]);
 
   const formatTime = (ms: number): string => {
     const seconds = Math.floor(ms / 1000);
@@ -157,6 +223,47 @@ const MemoryGame = (): React.JSX.Element => {
           <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">
             Match pairs of my hobbies and technologies!
           </p>
+
+          {/* Difficulty Selector */}
+          <div className="mb-4 sm:mb-6">
+            <div className="flex justify-center items-center space-x-2 sm:space-x-3">
+              {(Object.keys(difficultyConfigs) as DifficultyLevel[]).map(
+                (level) => {
+                  const config = difficultyConfigs[level];
+                  const isActive = difficulty === level;
+                  return (
+                    <motion.button
+                      key={level}
+                      onClick={() => setDifficulty(level)}
+                      className={`flex flex-col items-center justify-center p-2 sm:p-3 rounded-lg border-2 transition-all duration-200 min-w-[70px] sm:min-w-[80px] ${
+                        isActive
+                          ? config.theme === "green"
+                            ? "border-green-500 bg-green-50 text-green-700"
+                            : config.theme === "red"
+                            ? "border-red-500 bg-red-50 text-red-700"
+                            : "border-blue-500 bg-blue-50 text-blue-700"
+                          : "border-gray-200 bg-white text-gray-600 hover:border-gray-300 hover:bg-gray-50"
+                      }`}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <div className="text-lg sm:text-xl mb-1">
+                        {config.icon}
+                      </div>
+                      <div className="text-xs sm:text-sm font-semibold">
+                        {config.name}
+                      </div>
+                      <div className="text-xs text-gray-500 hidden sm:block">
+                        {config.gridCols}×{config.gridRows}
+                      </div>
+                    </motion.button>
+                  );
+                }
+              )}
+            </div>
+            <p className="text-xs sm:text-sm text-gray-500 text-center mt-2">
+              {currentConfig.description}
+            </p>
+          </div>
 
           {/* Game Stats - Mobile Optimized Layout */}
           <div className="space-y-3 sm:space-y-0 sm:flex sm:justify-center sm:items-center sm:space-x-4 md:space-x-6 mb-4 sm:mb-6">
@@ -189,7 +296,13 @@ const MemoryGame = (): React.JSX.Element => {
 
         {/* Game Board */}
         <motion.div
-          className="grid grid-cols-4 gap-2 sm:gap-3 md:gap-4 max-w-sm sm:max-w-md md:max-w-2xl mx-auto"
+          className={`grid gap-2 sm:gap-3 md:gap-4 mx-auto ${
+            difficulty === "easy"
+              ? "grid-cols-3 max-w-xs sm:max-w-sm md:max-w-md"
+              : difficulty === "medium"
+              ? "grid-cols-4 max-w-sm sm:max-w-md md:max-w-2xl"
+              : "grid-cols-4 max-w-sm sm:max-w-lg md:max-w-2xl"
+          }`}
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -228,6 +341,14 @@ const MemoryGame = (): React.JSX.Element => {
                     className={`absolute inset-0 w-full h-full rounded-lg sm:rounded-xl shadow-lg flex flex-col items-center justify-center p-2 sm:p-3 text-center ${
                       isMatched
                         ? "bg-gradient-to-br from-green-400 to-green-600 text-white"
+                        : currentConfig.theme === "green"
+                        ? card.category === "hobby"
+                          ? "bg-gradient-to-br from-green-400 to-green-600 text-white"
+                          : "bg-gradient-to-br from-emerald-400 to-emerald-600 text-white"
+                        : currentConfig.theme === "red"
+                        ? card.category === "hobby"
+                          ? "bg-gradient-to-br from-red-400 to-red-600 text-white"
+                          : "bg-gradient-to-br from-purple-400 to-purple-600 text-white"
                         : card.category === "hobby"
                         ? "bg-gradient-to-br from-purple-400 to-purple-600 text-white"
                         : "bg-gradient-to-br from-blue-400 to-blue-600 text-white"
