@@ -1,5 +1,7 @@
 # Charlie Henin - Professional Portfolio
 
+[See deployed version here](https://www.charliehenin.com/)
+
 This project is my upgraded resume website, built as the next step after my previous [portfolio](https://github.com/kimchicharlie/portfolio).
 
 My previous site was starting to feel outdated, so I set out to build a more modern version—tailored to the North American resume style, powered by newer technologies, and created as an experiment in AI-assisted development.
