@@ -1,18 +1,28 @@
 # Charlie Henin - Professional Portfolio
 
-A modern, responsive portfolio website built with Next.js, TypeScript, and TailwindCSS.
+This project is my upgraded resume website, built as the next step after my previous [portfolio](https://github.com/kimchicharlie/portfolio).
+
+My previous site was starting to feel outdated, so I set out to build a more modern version—tailored to the North American resume style, powered by newer technologies, and created as an experiment in AI-assisted development.
+
+One of my goals was to see how far I could go without writing much code myself. Using Cursor (claude-4-sonnet), I explored the limits of AI-assisted development.
+
+The result is a modern, responsive website powered by:
+- Next.js
+- TypeScript
+- TailwindCSS
+
+I also added a small memory game so visitors can get to know me in a more interactive way!
+
 
 ## 🌟 Features
 
 - **Multilingual Support**: Complete English/French translation with language toggle
 - **Modern Design**: Clean, professional layout inspired by contemporary design trends
-- **Enhanced Image Export**: Optimized layout captured as high-quality JPG, available in US Letter and A4 formats
-- **Language-specific Downloads**: Downloads include language suffix (EN/FR) for easy identification
+- **PDF Download**: PDF download, available in US Letter and A4 formats
 - **Responsive**: Works perfectly on desktop, tablet, and mobile devices
 - **Animations**: Smooth Framer Motion animations for enhanced user experience
 - **SEO Optimized**: Proper meta tags and structured data
 - **TypeScript**: Fully typed for better development experience
-- **No Photo**: Professional layout without personal photos (North American standard)
 
 ## 🚀 Getting Started
 
@@ -45,7 +55,7 @@ npm run dev
 
 ### Personal Information
 
-Update your personal information in `lib/portfolio-data.ts`:
+Update personal information in `lib/portfolio-data.ts`:
 
 - Personal info (name, title, about) - supports both English and French
 - Contact information
@@ -62,16 +72,15 @@ The portfolio supports both English and French:
 - **Automatic Language Detection**: Downloads are generated with language-specific filenames
 - **Complete Translation**: All content including job descriptions, education details, and hobbies are translated
 
-### Image Export
+### PDF Export
 
-The portfolio includes high-quality image generation functionality:
+The portfolio includes high-quality PDF generation functionality:
 
 - **US Letter Format**: Standard North American resume format
 - **A4 Format**: International standard format
 - **Optimized Layout**: Compact, professional layout designed to fit on a single page
-- **Language-specific Filenames**: Downloads include language suffix (charlie-henin-resume-US-Letter-EN.jpg)
-- **High Quality**: 2x scale rendering for crisp text and graphics
-- Click the download buttons in the header to generate high-quality JPG images
+- **Language-specific Filenames**: Downloads include language suffix (charlie-henin-resume-US-Letter-EN.pdf)
+- Click the download buttons in the header to generate high-quality PDF
 
 ### Styling
 
@@ -89,7 +98,7 @@ The design uses TailwindCSS with a custom color scheme:
 - **Styling**: TailwindCSS
 - **Animations**: Framer Motion
 - **Icons**: Lucide React
-- **Image Export**: html-to-image with high-quality JPG generation
+- **PDF generation**: jspdf
 - **Internationalization**: React Context for language management
 - **Font**: Inter (Google Fonts)
 
@@ -101,40 +110,6 @@ The design uses TailwindCSS with a custom color scheme:
 npm run build
 ```
 
-### Deploy
-
-You can deploy this portfolio to any hosting platform that supports Next.js:
-
-- **Vercel** (recommended): Connect your GitHub repo
-- **Netlify**: Use the Next.js build settings
-- **AWS Amplify**: Deploy directly from Git
-- **Docker**: Build and deploy in containers
-
-## 📧 Contact Information
-
-Current contact details in the portfolio:
-
-- **Phone**: +33.629.68.53.34
-- **Email**: charlie.henin@gmail.com
-- **Website**: www.charliehenin.com
-- **LinkedIn**: charlie-henin
-- **GitHub**: kimchicharlie
-
-## 🎯 Latest Updates
-
-- ✅ **Multilingual Support**: Complete English/French translation with language toggle
-- ✅ **Enhanced Image Export**: High-quality JPG generation with compact layout
-- ✅ **Language-specific Downloads**: Automatic language detection in filenames
-- ✅ Added current Stingray position (July 2024 - Present)
-- ✅ Modern, professional design
-- ✅ Mobile-responsive layout
-- ✅ Smooth animations and interactions
-- ✅ SEO optimization
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
----
-
-**Built with ❤️ for professional excellence**
