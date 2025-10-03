@@ -18,9 +18,9 @@ const LanguageToggle = (): React.JSX.Element => {
       <Languages className="h-4 w-4 text-gray-600" />
       <div className="flex bg-gray-100 rounded-lg p-1">
         <motion.button
-          onClick={() => handleLanguageChange("en")}
+          onClick={() => handleLanguageChange(Language.EN)}
           className={`px-3 py-1 rounded-md text-sm font-medium transition-colors duration-200 ${
-            language === "en"
+            language === Language.EN
               ? "bg-white text-primary-600 shadow-sm"
               : "text-gray-600 hover:text-gray-900"
           }`}
@@ -29,9 +29,9 @@ const LanguageToggle = (): React.JSX.Element => {
           EN
         </motion.button>
         <motion.button
-          onClick={() => handleLanguageChange("fr")}
+          onClick={() => handleLanguageChange(Language.FR)}
           className={`px-3 py-1 rounded-md text-sm font-medium transition-colors duration-200 ${
-            language === "fr"
+            language === Language.FR
               ? "bg-white text-primary-600 shadow-sm"
               : "text-gray-600 hover:text-gray-900"
           }`}

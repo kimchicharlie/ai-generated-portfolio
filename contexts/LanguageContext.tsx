@@ -77,7 +77,7 @@ interface LanguageProviderProps {
 export const LanguageProvider = ({
   children,
 }: LanguageProviderProps): React.JSX.Element => {
-  const [language, setLanguage] = useState<Language>("en");
+  const [language, setLanguage] = useState<Language>(Language.EN);
 
   const t = (key: string): string => {
     return (

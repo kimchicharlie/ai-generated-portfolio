@@ -4,6 +4,7 @@ import React from "react";
 import "./globals.css";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Navigation from "@/components/Navigation";
+import { Language } from "@/types/language";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -49,7 +50,7 @@ interface RootLayoutProps {
 
 const RootLayout = ({ children }: RootLayoutProps): React.JSX.Element => {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang={Language.EN} className="scroll-smooth">
       <body className={`${inter.className} bg-white text-gray-900 antialiased`}>
         <LanguageProvider>
           <Navigation />

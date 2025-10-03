@@ -36,7 +36,6 @@ const Navigation = (): React.JSX.Element => {
     setIsMobileMenuOpen(false);
   };
 
-  // Handle body scroll locking when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -44,18 +43,15 @@ const Navigation = (): React.JSX.Element => {
       document.body.style.overflow = "unset";
     }
 
-    // Cleanup function to restore scroll when component unmounts
     return () => {
       document.body.style.overflow = "unset";
     };
   }, [isMobileMenuOpen]);
 
-  // Close mobile menu when route changes
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
-  // Handle keyboard navigation
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent): void => {
       if (event.key === "Escape" && isMobileMenuOpen) {

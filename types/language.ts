@@ -1,4 +1,7 @@
-export type Language = "en" | "fr";
+export enum Language {
+  EN = "en",
+  FR = "fr",
+}
 
 export interface LanguageContextType {
   language: Language;

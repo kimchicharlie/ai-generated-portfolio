@@ -60,7 +60,6 @@ export interface PortfolioData {
   hobbies: Hobby[];
 }
 
-// Helper function to get localized content
 export const getLocalizedContent = (
   content: LocalizedContent,
   language: Language
