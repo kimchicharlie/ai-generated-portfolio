@@ -1,9 +1,6 @@
-"use client";
+import { Translations } from "@/shared/types/language";
 
-import React, { createContext, useContext, useState, ReactNode } from "react";
-import { Language, LanguageContextType, Translations } from "@/types/language";
-
-const translations: Translations = {
+export const translations: Translations = {
   en: {
     // Navigation
     "nav.resume": "Resume",
@@ -64,46 +61,4 @@ const translations: Translations = {
     "common.period": "Période",
     "common.present": "Présent",
   },
-};
-
-const LanguageContext = createContext<LanguageContextType | undefined>(
-  undefined
-);
-
-interface LanguageProviderProps {
-  children: ReactNode;
-}
-
-export const LanguageProvider = ({
-  children,
-}: LanguageProviderProps): React.JSX.Element => {
-  const [language, setLanguage] = useState<Language>(Language.EN);
-
-  const t = (key: string): string => {
-    return (
-      translations[language][
-        key as keyof (typeof translations)[typeof language]
-      ] || key
-    );
-  };
-
-  const value: LanguageContextType = {
-    language,
-    setLanguage,
-    t,
-  };
-
-  return (
-    <LanguageContext.Provider value={value}>
-      {children}
-    </LanguageContext.Provider>
-  );
-};
-
-export const useLanguage = (): LanguageContextType => {
-  const context = useContext(LanguageContext);
-  if (context === undefined) {
-    throw new Error("useLanguage must be used within a LanguageProvider");
-  }
-  return context;
 };

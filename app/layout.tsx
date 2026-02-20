@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import React from "react";
 import "./globals.css";
-import { LanguageProvider } from "@/contexts/LanguageContext";
-import Navigation from "@/components/Navigation";
-import { Language } from "@/types/language";
+import { LanguageProvider } from "@/shared/i18n";
+import Navigation from "@/shared/ui/Navigation";
+import { Language } from "@/shared/types/language";
 
 const inter = Inter({ subsets: ["latin"] });
 

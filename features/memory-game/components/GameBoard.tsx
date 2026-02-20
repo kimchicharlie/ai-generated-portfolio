@@ -1,6 +1,7 @@
+import React from "react";
 import { motion } from "framer-motion";
-import { getGridLayoutClasses, getCardStyling } from "../utils";
-import { CardType, DifficultyLevel, DifficultyConfig } from "../types";
+import { CardType, DifficultyConfig, DifficultyLevel } from "../types";
+import { getCardStyling, getGridLayoutClasses } from "../utils";
 
 type GameBoardProps = {
   difficulty: DifficultyLevel;
@@ -18,11 +19,11 @@ export const GameBoard = ({
   matchedPairs,
   handleCardClick,
   currentConfig,
-}: GameBoardProps) => {
+}: GameBoardProps): React.JSX.Element => {
   return (
     <motion.div
       className={`grid gap-2 sm:gap-3 md:gap-4 mx-auto ${getGridLayoutClasses(
-        difficulty
+        difficulty,
       )}`}
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -47,7 +48,6 @@ export const GameBoard = ({
               animate={{ rotateY: isFlipped ? 180 : 0 }}
               transition={{ duration: 0.6 }}
             >
-              {/* Card Back */}
               <div
                 className="absolute inset-0 w-full h-full bg-gradient-to-br from-gray-400 to-gray-600 rounded-lg sm:rounded-xl shadow-lg flex items-center justify-center"
                 style={{ backfaceVisibility: "hidden" }}
@@ -57,12 +57,11 @@ export const GameBoard = ({
                 </div>
               </div>
 
-              {/* Card Front */}
               <div
                 className={`absolute inset-0 w-full h-full rounded-lg sm:rounded-xl shadow-lg flex flex-col items-center justify-center p-2 sm:p-3 text-center ${getCardStyling(
                   isMatched,
                   currentConfig.theme,
-                  card.category
+                  card.category,
                 )}`}
                 style={{
                   transform: "rotateY(180deg)",

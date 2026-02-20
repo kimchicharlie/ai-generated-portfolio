@@ -1,25 +1,15 @@
-"use client";
-
-import React, { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { RefreshCw, Trophy, Clock } from "lucide-react";
-import { portfolioData } from "@/lib/portfolio-data";
-import { useLanguage } from "@/contexts/LanguageContext";
-import { getLocalizedContent } from "@/types/portfolio";
-import { CardType, GameState, DifficultyLevel } from "./types";
-import { difficultyConfigs } from "./constants";
+import { useCallback, useEffect, useState } from "react";
+import { getLocalizedContent, useLanguage } from "@/shared/i18n";
+import { portfolioData } from "@/features/resume/data";
+import { difficultyConfigs } from "@/features/memory-game/constants";
+import { getRandomItems } from "@/features/memory-game/utils";
 import {
-  formatTime,
-  getRandomItems,
-  getCardStyling,
-  getGridLayoutClasses,
-  getDifficultyButtonStyling,
-} from "./utils";
-import { WinMessage } from "./components/WinMessage";
-import { GameBoard } from "./components/GameBoard";
-import { Header } from "./components/Header";
+  CardType,
+  DifficultyLevel,
+  GameState,
+} from "@/features/memory-game/types";
 
-const MemoryGame = (): React.JSX.Element => {
+export const useMemoryGame = () => {
   const { language } = useLanguage();
   const [cards, setCards] = useState<CardType[]>([]);
   const [flippedCards, setFlippedCards] = useState<string[]>([]);
@@ -29,7 +19,7 @@ const MemoryGame = (): React.JSX.Element => {
   const [startTime, setStartTime] = useState<number | null>(null);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [difficulty, setDifficulty] = useState<DifficultyLevel>(
-    DifficultyLevel.MEDIUM
+    DifficultyLevel.MEDIUM,
   );
 
   const currentConfig = difficultyConfigs[difficulty];
@@ -37,12 +27,12 @@ const MemoryGame = (): React.JSX.Element => {
   const initializeGame = useCallback(() => {
     const config = difficultyConfigs[difficulty];
     const hobbyCount = Math.ceil(config.pairCount / 2);
-    const techCount = config.pairCount - hobbyCount;
+    const technologyCount = config.pairCount - hobbyCount;
 
     const selectedHobbies = getRandomItems(portfolioData.hobbies, hobbyCount);
     const selectedTechnologies = getRandomItems(
       portfolioData.technologies,
-      techCount
+      technologyCount,
     );
 
     const gameItems: CardType[] = [
@@ -53,9 +43,9 @@ const MemoryGame = (): React.JSX.Element => {
         category: "hobby" as const,
         matched: false,
       })),
-      ...selectedTechnologies.map((tech) => ({
-        id: `tech-${tech.name}`,
-        content: tech.name,
+      ...selectedTechnologies.map((technology) => ({
+        id: `tech-${technology.name}`,
+        content: technology.name,
         category: "technology" as const,
         matched: false,
       })),
@@ -77,7 +67,7 @@ const MemoryGame = (): React.JSX.Element => {
     setElapsedTime(0);
   }, [difficulty, language]);
 
-  const handleCardClick = (cardId: string) => {
+  const handleCardClick = (cardId: string): void => {
     if (
       gameState !== GameState.PLAYING ||
       flippedCards.includes(cardId) ||
@@ -95,10 +85,10 @@ const MemoryGame = (): React.JSX.Element => {
     setFlippedCards(newFlippedCards);
 
     if (newFlippedCards.length === 2) {
-      setMoves((prev) => prev + 1);
+      setMoves((previousMoves) => previousMoves + 1);
 
       const [firstCard, secondCard] = newFlippedCards.map((id) =>
-        cards.find((card) => card.id === id)
+        cards.find((card) => card.id === id),
       );
 
       if (
@@ -107,13 +97,17 @@ const MemoryGame = (): React.JSX.Element => {
         firstCard.content === secondCard.content &&
         firstCard.category === secondCard.category
       ) {
-        setMatchedPairs((prev) => [...prev, ...newFlippedCards]);
+        setMatchedPairs((previousPairs) => [
+          ...previousPairs,
+          ...newFlippedCards,
+        ]);
         setFlippedCards([]);
-      } else {
-        setTimeout(() => {
-          setFlippedCards([]);
-        }, currentConfig.flipBackDelay);
+        return;
       }
+
+      setTimeout(() => {
+        setFlippedCards([]);
+      }, currentConfig.flipBackDelay);
     }
   };
 
@@ -124,56 +118,36 @@ const MemoryGame = (): React.JSX.Element => {
   }, [matchedPairs.length, cards.length]);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (gameState === "playing" && startTime !== null) {
-      interval = setInterval(() => {
+    let intervalId: ReturnType<typeof setInterval> | undefined;
+
+    if (gameState === GameState.PLAYING && startTime !== null) {
+      intervalId = setInterval(() => {
         setElapsedTime(Date.now() - startTime);
       }, 1000);
     }
-    return () => clearInterval(interval);
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
   }, [gameState, startTime]);
 
   useEffect(() => {
     initializeGame();
   }, [initializeGame]);
 
-  useEffect(() => {
-    initializeGame();
-  }, [difficulty, initializeGame]);
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 px-4 py-6 sm:p-4">
-      <div className="max-w-4xl mx-auto">
-        <Header
-          difficulty={difficulty}
-          setDifficulty={setDifficulty}
-          moves={moves}
-          elapsedTime={elapsedTime}
-          initializeGame={initializeGame}
-          currentConfig={currentConfig}
-        />
-
-        <GameBoard
-          difficulty={difficulty}
-          cards={cards}
-          flippedCards={flippedCards}
-          matchedPairs={matchedPairs}
-          handleCardClick={handleCardClick}
-          currentConfig={currentConfig}
-        />
-
-        <AnimatePresence>
-          {gameState === GameState.WON && (
-            <WinMessage
-              moves={moves}
-              elapsedTime={elapsedTime}
-              initializeGame={initializeGame}
-            />
-          )}
-        </AnimatePresence>
-      </div>
-    </div>
-  );
+  return {
+    cards,
+    flippedCards,
+    matchedPairs,
+    moves,
+    gameState,
+    elapsedTime,
+    difficulty,
+    currentConfig,
+    setDifficulty,
+    initializeGame,
+    handleCardClick,
+  };
 };
-
-export default MemoryGame;

@@ -57,7 +57,7 @@ npm run dev
 
 ### Personal Information
 
-Update personal information in `lib/portfolio-data.ts`:
+Update personal information in `features/resume/data/portfolioData.ts`:
 
 - Personal info (name, title, about) - supports both English and French
 - Contact information

@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { FileText, Gamepad2, Home, Menu, X } from "lucide-react";
-import { useLanguage } from "@/contexts/LanguageContext";
-import LanguageToggle from "./LanguageToggle";
+import { useLanguage } from "@/shared/i18n";
+import LanguageToggle from "@/shared/ui/LanguageToggle";
 
 const Navigation = (): React.JSX.Element => {
   const pathname = usePathname();
@@ -29,7 +29,7 @@ const Navigation = (): React.JSX.Element => {
   ];
 
   const handleMobileMenuToggle = (): void => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+    setIsMobileMenuOpen((previousValue) => !previousValue);
   };
 
   const handleMobileMenuClose = (): void => {
@@ -75,7 +75,6 @@ const Navigation = (): React.JSX.Element => {
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex justify-between items-center">
-            {/* Logo/Brand */}
             <Link
               href="/"
               className="flex items-center space-x-2 sm:space-x-3 hover:opacity-80 transition-opacity"
@@ -87,7 +86,6 @@ const Navigation = (): React.JSX.Element => {
               </span>
             </Link>
 
-            {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
               {navItems.map((item) => {
                 const Icon = item.icon;
@@ -116,12 +114,10 @@ const Navigation = (): React.JSX.Element => {
               })}
             </nav>
 
-            {/* Desktop Language Toggle */}
             <div className="hidden md:block">
               <LanguageToggle />
             </div>
 
-            {/* Mobile Menu Button */}
             <motion.button
               onClick={handleMobileMenuToggle}
               className="md:hidden p-2 rounded-lg text-gray-600 hover:text-primary-600 hover:bg-gray-50 transition-colors"
@@ -139,11 +135,9 @@ const Navigation = (): React.JSX.Element => {
         </div>
       </motion.header>
 
-      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               className="fixed inset-0 bg-black bg-opacity-50 z-50 md:hidden"
               initial={{ opacity: 0 }}
@@ -152,7 +146,6 @@ const Navigation = (): React.JSX.Element => {
               onClick={handleMobileMenuClose}
             />
 
-            {/* Mobile Menu */}
             <motion.div
               className="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-white shadow-xl z-50 md:hidden"
               initial={{ x: "100%" }}
@@ -161,7 +154,6 @@ const Navigation = (): React.JSX.Element => {
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
             >
               <div className="flex flex-col h-full">
-                {/* Mobile Menu Header */}
                 <div className="flex items-center justify-between p-6 border-b">
                   <div className="flex items-center space-x-3">
                     <Home className="h-6 w-6 text-primary-600" />
@@ -178,11 +170,11 @@ const Navigation = (): React.JSX.Element => {
                   </button>
                 </div>
 
-                {/* Mobile Menu Content */}
                 <div className="flex-1 py-6">
                   <nav className="space-y-2 px-6">
                     {navItems.map((item) => {
                       const Icon = item.icon;
+
                       return (
                         <Link
                           key={item.href}
@@ -205,7 +197,6 @@ const Navigation = (): React.JSX.Element => {
                   </nav>
                 </div>
 
-                {/* Mobile Menu Footer */}
                 <div className="border-t p-6">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium text-gray-700">

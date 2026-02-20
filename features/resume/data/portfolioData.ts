@@ -1,4 +1,4 @@
-import { PortfolioData } from "@/types/portfolio";
+import { PortfolioData } from "@/shared/types/portfolio";
 
 export const portfolioData: PortfolioData = {
   personalInfo: {

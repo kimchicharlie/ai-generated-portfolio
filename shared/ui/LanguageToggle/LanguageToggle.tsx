@@ -3,8 +3,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Languages } from "lucide-react";
-import { useLanguage } from "@/contexts/LanguageContext";
-import { Language } from "@/types/language";
+import { useLanguage } from "@/shared/i18n";
+import { Language } from "@/shared/types/language";
 
 const LanguageToggle = (): React.JSX.Element => {
   const { language, setLanguage } = useLanguage();

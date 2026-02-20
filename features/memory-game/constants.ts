@@ -1,4 +1,4 @@
-import { DifficultyLevel, DifficultyConfig } from "./types";
+import { DifficultyConfig, DifficultyLevel } from "./types";
 
 export const difficultyConfigs: Record<DifficultyLevel, DifficultyConfig> = {
   easy: {

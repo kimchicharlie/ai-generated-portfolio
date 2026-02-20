@@ -12,7 +12,7 @@ export const formatTime = (ms: number): string => {
 export const getCardStyling = (
   isMatched: boolean,
   theme: string,
-  category: "hobby" | "technology"
+  category: "hobby" | "technology",
 ): string => {
   if (isMatched) {
     return "bg-gradient-to-br from-green-400 to-green-600 text-white";
@@ -36,6 +36,7 @@ export const getCardStyling = (
 
   const selectedTheme =
     themeStyles[theme as keyof typeof themeStyles] || themeStyles.default;
+
   return selectedTheme[category];
 };
 
@@ -53,7 +54,7 @@ export const getGridLayoutClasses = (difficulty: string): string => {
 
 export const getDifficultyButtonStyling = (
   isActive: boolean,
-  theme: string
+  theme: string,
 ): string => {
   if (!isActive) {
     return "border-gray-200 bg-white text-gray-600 hover:border-gray-300 hover:bg-gray-50";

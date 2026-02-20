@@ -1,5 +1,3 @@
-import { Language } from "./language";
-
 export interface ContactInfo {
   phone: string;
   email: string;
@@ -59,17 +57,3 @@ export interface PortfolioData {
   technologies: Technology[];
   hobbies: Hobby[];
 }
-
-export const getLocalizedContent = (
-  content: LocalizedContent,
-  language: Language
-): string => {
-  return content[language];
-};
-
-export const getLocalizedArray = (
-  content: LocalizedStringArray,
-  language: Language
-): string[] => {
-  return content[language];
-};
