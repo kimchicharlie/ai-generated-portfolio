@@ -13,9 +13,6 @@ The result is a modern, responsive website powered by:
 - TypeScript
 - TailwindCSS
 
-I also added a small memory game so visitors can get to know me in a more interactive way!
-
-
 ## 🌟 Features
 
 - **Multilingual Support**: Complete English/French translation with language toggle

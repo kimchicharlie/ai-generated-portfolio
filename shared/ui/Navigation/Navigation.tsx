@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { FileText, Gamepad2, Home, Menu, X } from "lucide-react";
+import { FileText, Home, Menu, X } from "lucide-react";
 import { useLanguage } from "@/shared/i18n";
 import LanguageToggle from "@/shared/ui/LanguageToggle";
 
@@ -19,12 +19,6 @@ const Navigation = (): React.JSX.Element => {
       label: t("nav.resume"),
       icon: FileText,
       isActive: pathname === "/",
-    },
-    {
-      href: "/memory-game",
-      label: t("nav.memoryGame"),
-      icon: Gamepad2,
-      isActive: pathname === "/memory-game",
     },
   ];
 

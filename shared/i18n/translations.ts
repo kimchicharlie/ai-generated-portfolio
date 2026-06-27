@@ -4,7 +4,6 @@ export const translations: Translations = {
   en: {
     // Navigation
     "nav.resume": "Resume",
-    "nav.memoryGame": "Memory Game",
 
     // Header
     "header.resume": "Resume",
@@ -34,7 +33,6 @@ export const translations: Translations = {
   fr: {
     // Navigation
     "nav.resume": "CV",
-    "nav.memoryGame": "Jeu de Mémoire",
 
     // Header
     "header.resume": "CV",

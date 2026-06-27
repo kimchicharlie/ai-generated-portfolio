@@ -13,7 +13,7 @@ export const portfolioData: PortfolioData = {
     },
   },
   contact: {
-    phone: "+33.629.68.53.34",
+    phone: "+1 450 234 2670",
     email: "charlie.henin@gmail.com",
     website: "www.charliehenin.com",
     linkedin: "charlie-henin",

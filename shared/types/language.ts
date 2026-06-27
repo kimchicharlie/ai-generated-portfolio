@@ -12,7 +12,6 @@ export interface LanguageContextType {
 export interface TranslationKeys {
   // Navigation
   "nav.resume": string;
-  "nav.memoryGame": string;
 
   // Header
   "header.resume": string;
